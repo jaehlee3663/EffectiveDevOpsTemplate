@@ -15,6 +15,7 @@ from troposphere import (
 )
 
 
+
 ApplicationName = "helloworld"
 ApplicationPort = "3000"
 GithubAccount = "jaehlee3663"
@@ -41,7 +42,7 @@ t.add_resource(ec2.SecurityGroup(
             IpProtocol="tcp",
             FromPort="22",
             ToPort="22",
-            CidrIp="0.0.0.0/0", 
+            CidrIp=PublicCidrIp,
         ),
         ec2.SecurityGroupRule(
             IpProtocol="tcp",
@@ -54,13 +55,14 @@ t.add_resource(ec2.SecurityGroup(
 
 ud = Base64(Join('\n', [
     "#!/bin/bash",
-    "yum remove java-1.7.0-openjdk -y",
-    "yum install java-1.8.0-openjdk -y",
-    "yum install --enablerepo=epel -y git",
-    "pip install ansible",
-      AnsiblePullCmd,
-      "echo '*/10 * * * * root {}' > /etc/cron.d/ansible-pull".format(AnsiblePullCmd)
+    "sudo yum remove java-1.7.0-openjdk -y",
+    "sudo yum install java-1.8.0-openjdk -y",
+    "sudo yum install --enablerepo=epel -y git",
+    "sudo yum install --enablerepo=epel -y ansible",
+      AnsiblePullCmd
+#      "echo '*/10 * * * * root {}' > /etc/cron.d/ansible-pull".format(AnsiblePullCmd)
 ]))
+
 
 t.add_resource(ec2.Instance(
     "instance",
