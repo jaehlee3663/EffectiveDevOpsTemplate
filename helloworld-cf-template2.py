@@ -16,7 +16,8 @@ from troposphere import (
 
 ApplicationName = "helloworld"
 ApplicationPort = "3000"
-GithubAccount = "EffectiveDevOpsWithAWS"
+#GithubAccount = "EffectiveDevOpsWithAWS"
+GithubAccount = "jaehlee3663"
 GithubAnsibleURL = "https://github.com/{}/ansible".format(GithubAccount)
 
 PublicCidrIp = str(ip_network(get_ip()))

@@ -43,7 +43,7 @@
                 "GroupDescription": "Allow SSH and TCP/3000 access",
                 "SecurityGroupIngress": [
                     {
-                        "CidrIp": "13.125.248.238/32",  
+                        "CidrIp": "218.48.47.219/32",
                         "FromPort": "22",
                         "IpProtocol": "tcp",
                         "ToPort": "22"
@@ -78,8 +78,8 @@
                                 "#!/bin/bash",
                                 "yum install --enablerepo=epel -y git",
                                 "yum install --enablerepo=epel -y ansible",
-                                "/usr/bin/ansible-pull -U https://github.com/EffectiveDevOpsWithAWS/ansible helloworld.yml -i localhost",
-                                "echo '*/10 * * * * /usr/bin/ansible-pull -U https://github.com/EffectiveDevOpsWithAWS/ansible helloworld.yml -i localhost' > /etc/cron.d/ansible-pull"
+                                "/usr/bin/ansible-pull -U https://github.com/jaehlee3663/ansible helloworld.yml -i localhost",
+                                "echo '*/10 * * * * /usr/bin/ansible-pull -U https://github.com/jaehlee3663/ansible helloworld.yml -i localhost' > /etc/cron.d/ansible-pull"
                             ]
                         ]
                     }
