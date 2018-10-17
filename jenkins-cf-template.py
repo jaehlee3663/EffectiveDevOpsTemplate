@@ -28,13 +28,14 @@ from awacs.aws import (
     Statement,
 )
 
+from awacs.sts import AssumeRole
+
 
 ApplicationName = "jenkins"
 ApplicationPort = "8080"
-#GithubAccount = "EffectiveDevOpsWithAWS"
 GithubAccount = "jaehlee3663"
 GithubAnsibleURL = "https://github.com/{}/ansible".format(GithubAccount)
-AnsiblePullCmd = "/usr/local/ansible-pull -U {} {}.yml -i localhost".format(GithubAnsibleURL, ApplicationName)
+AnsiblePullCmd = "/usr/local/bin/ansible-pull -U {} {}.yml -i localhost".format(GithubAnsibleURL, ApplicationName)
 
 PublicCidrIp = str(ip_network(get_ip()))
 
@@ -77,6 +78,19 @@ ud = Base64(Join('\n', [
       AnsiblePullCmd,
       "echo '*/10 * * * * root {}' > /etc/cron.d/ansible-pull".format(AnsiblePullCmd)
 ]))
+
+t.add_resource(Role(
+  "Role",
+  AssumeRolePolicyDocument=Policy(
+    Statement=[
+      Statement(
+        Effect=Allow,
+        Action=[AssumeRole],
+        Principal=Principal("Service", ["ec2.amazonaws.com"])
+       )
+      ]
+    )
+))
 
 t.add_resource(InstanceProfile(
     "InstanceProfile",
